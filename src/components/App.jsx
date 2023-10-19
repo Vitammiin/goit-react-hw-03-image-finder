@@ -1,6 +1,6 @@
 // import Button from './Button/Button'
 import { fetchPosts } from 'servis/API';
-// import ImageGallery from './ImageGallery/ImageGallery';
+import ImageGallery from './ImageGallery/ImageGallery';
 // import Loader from './Loader/Loader'
 // import Modal from './Modal/Modal'
 import Searchbar from './Searchbar/Searchbar';
@@ -33,6 +33,7 @@ export class App extends Component {
       <div>
         <div>
           <Searchbar />
+          <ImageGallery images={this.state.images} />
         </div>
       </div>
     );
