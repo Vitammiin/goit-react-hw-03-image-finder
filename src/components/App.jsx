@@ -5,21 +5,26 @@ import ImageGallery from './ImageGallery/ImageGallery';
 // import Modal from './Modal/Modal'
 import Searchbar from './Searchbar/Searchbar';
 import { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 
 export class App extends Component {
   state = {
-    images: [],
+    posts: null,
     isLoading: false,
     error: null,
   };
 
-  fethAllPosts = async () => {
+  fethAllPost = async () => {
     try {
-      const images = await fetchPosts();
-      this.setState({ images: images });
-      console.log(images);
-    } catch (error) {}
+      this.setState({ isLoading: true });
+      const posts = await fetchPosts();
+      console.log(posts);
+      this.setState({ posts: posts.hits });
+    } catch (error) {
+      this.setState({ error: error.massage });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   };
 
   componentDidMount() {
@@ -28,12 +33,13 @@ export class App extends Component {
 
   render() {
     const showPosts =
-      Array.isArray(this.state.images) && this.state.images.length;
+      Array.isArray(this.state.posts) && this.state.images.length;
     return (
       <div>
         <div>
           <Searchbar />
-          <ImageGallery images={this.state.images} />
+
+          <ImageGallery images={this.state.posts} />
         </div>
       </div>
     );

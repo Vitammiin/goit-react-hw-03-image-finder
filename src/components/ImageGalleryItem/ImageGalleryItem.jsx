@@ -1,14 +1,34 @@
-import css from '../styles.module.css';
+import { Component } from 'react';
+import css from './ImageGallery.module.css';
+import React from 'react';
+import { fetchPosts } from 'components/servise/api';
 
-const ImageGalleryItem = ({ images }) => {
-  <div>
-    {images.map(imag => (
-      <li className={css.ImageGalleryItemimage}>
-        <img src={imag.largeImageURL} alt="" />
-      </li>
-    ))}
-    ;
-  </div>;
-};
-
-export default ImageGalleryItem;
+export default class ImageGallery extends Component {
+  render() {
+    return (
+      <div>
+        {this.state.error && <p>{this.state.error}</p>}
+        {this.state.isLoading && (
+          <div>
+            <p>Loading...</p>
+          </div>
+        )}
+        <ul className={css.gallery}>
+          {this.state.posts &&
+            this.state.posts.map(post => {
+              return (
+                <li key={post.id} className={css.galleryItem}>
+                  <img src={post.webformatURL} alt={post.tags} />
+                  <div>
+                    {/* <span>id : {post.id}</span>
+                    <span>webformatURL : {post.webformatURL}</span>
+                    <span>largeImageURL : {post.largeImageURL}</span> */}
+                  </div>
+                </li>
+              );
+            })}
+        </ul>
+      </div>
+    );
+  }
+}
