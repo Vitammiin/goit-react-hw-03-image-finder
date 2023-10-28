@@ -1,24 +1,38 @@
-import css from '../styles.module.css';
+import { Component } from 'react';
+import css from './Searchbar.module.css';
+import React from 'react';
 
-const Searchbar = () => {
-  return (
-    <div>
-      <header className={css.Searchbar}>
-        <form className={css.SearchForm}>
-          <button type="submit" className={css.ButtonLabel}>
-            <span className={css.Button}>Search</span>
-          </button>
+export default class Searchbar extends Component {
+  state = {
+    searchPost: null,
+  };
 
-          <input
-            className={css.Input}
-            type="text"
-            autocomplete="off"
-            autofocus
-            placeholder="Search images and photos"
-          />
-        </form>
-      </header>
-    </div>
-  );
-};
-export default Searchbar;
+  SearchbarClick = event => {
+    event.preventDefault();
+    const searchPost = event.currentTarget.elements.query.value;
+    console.log(searchPost);
+  };
+
+  render() {
+    return (
+      <div>
+        <header className={css.Searchbar}>
+          <form onSubmit={this.SearchbarClick} className={css.SearchForm}>
+            <button type="submit" className={css.button}>
+              <span className={css.buttonLabel}>Search</span>
+            </button>
+
+            <input
+              className={css.input}
+              type="text"
+              autoComplete="off"
+              autoFocus
+              placeholder="Search images and photos"
+              name="query"
+            />
+          </form>
+        </header>
+      </div>
+    );
+  }
+}

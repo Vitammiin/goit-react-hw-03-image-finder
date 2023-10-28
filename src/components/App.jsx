@@ -1,30 +1,19 @@
-// import Button from './Button/Button'
-import { fetchPosts } from 'servis/API';
-import ImageGallery from './ImageGallery/ImageGallery';
-// import Loader from './Loader/Loader'
-// import Modal from './Modal/Modal'
+import React, { Component } from 'react';
+import { fetchPosts } from 'servise/api';
 import Searchbar from './Searchbar/Searchbar';
-import { Component } from 'react';
-// import axios from 'axios';
-
 export class App extends Component {
   state = {
-    posts: null,
+    posts: [],
     isLoading: false,
     error: null,
   };
 
-  fethAllPost = async () => {
+  fethAllPosts = async () => {
     try {
-      this.setState({ isLoading: true });
       const posts = await fetchPosts();
       console.log(posts);
-      this.setState({ posts: posts.hits });
-    } catch (error) {
-      this.setState({ error: error.massage });
-    } finally {
-      this.setState({ isLoading: false });
-    }
+      this.setState({ posts: [] });
+    } catch (error) {}
   };
 
   componentDidMount() {
@@ -32,14 +21,21 @@ export class App extends Component {
   }
 
   render() {
-    const showPosts =
-      Array.isArray(this.state.posts) && this.state.images.length;
     return (
       <div>
         <div>
           <Searchbar />
-
-          <ImageGallery images={this.state.posts} />
+        </div>
+        <div>
+          <ul>
+            {this.state.posts.map(post => {
+              return (
+                <li key={post.id}>
+                  <img src={post.webformatURL} alt="" />
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     );
